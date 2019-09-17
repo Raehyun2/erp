@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+
+<a class="navbar-brand">ERP System (상품관리)</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="POST" action="{%url 'receipts_page'%}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="excel">
+        <br>
+        <button type="submit" name="view">상품 조회</button>
+        <button type="submit" name="upload">초기 업로드</button>
+        <button type="submit" name="add">추가 업로드</button>
+        <button type="submit" name="delete">목록 삭제하기</button>
+
+        {% if error_message_0 %}
+        <p> <strong> {{ error_message_0 }} </strong> </p>
+        {% endif %}
+        {% if error_message_1 %}
+        <p> <strong> {{ error_message_1 }} </strong> </p>
+        {% endif %}
+        {% if error_message_2 %}
+        <p> <strong> {{ error_message_2 }} </strong> </p>
+        {% endif %}
+        {% if error_message_3 %}
+        <p> <strong> {{ error_message_3 }} </strong> </p>
+        {% endif %}
+        {% if confirm_message_1 %}
+        <p> <strong> {{ confirm_message_1 }} </strong> </p>
+        {% endif %}
+    </form>
+
+    <br>
+
+    {% if receipts %}
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>입고일</th>
+                <th>상품명</th>
+                <th>상품번호</th>
+                <th>입고처</th>
+                <th>잔고수량</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for i in receipts %}
+            <tr>
+                <td>"{{i.user}}"</td>
+                <td>"{{i.date}}"</td>
+                <td>"{{i.product_name}}"</td>
+                <td>"{{i.product_number}}"</td>
+                <td>"{{i.product_place}}"</td>
+                <td>"{{i.remain_product}}"</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+{% endblock %}

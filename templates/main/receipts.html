@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">ERP System</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li><a>{{user.username}} 님 환영합니다.</a></li>
+                <li><a href="{%url 'logout'%}">로그아웃</a></li>
+                {% else %}
+                <li><a href="{%url 'login'%}">로그인</a></li>
+                <li><a href="{%url 'signup'%}">회원가입</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form method="POST" action="{%url 'receipts'%}" enctype="multipart/form-data">
+        {% csrf_token %}
+       {{ form.as_p }}
+        <br>
+        <br>
+<!--        <button type="submit" name="overview">현황 보기</button>-->
+<!--                        {% if error_message_1 %}-->
+<!--        <p> <strong> {{ error_message_1 }} </strong> </p>-->
+<!--        {% endif %}-->
+
+        <br>
+        <br>
+        <button type="submit" name="initial">초기 업로드</button>
+        {% if error_message_initial %}
+        <p> <strong> {{ error_message_initial }} </strong> </p>
+        {% endif %}
+<!--        <button type="submit" name="delete">삭제하기</button>-->
+<!--        {% if confirm_message %}-->
+<!--        <p> <strong> {{ confirm_message }} </strong> </p>-->
+<!--        {% endif %}-->
+
+        <br>
+        <br>
+        <button type="submit" name="add">추가 업로드</button>
+        <br>
+        'xls, csv 등의 파일은 안됩니다..'
+        '엑셀의 첫 시트 열이 날짜, 바코드, 품번, 품명, 입고처, 수량'
+        {% if error_message %}
+            <p> <strong> {{ error_message }} </strong> </p>
+        {% endif %}
+    </form>
+    <br>
+
+    <br>
+    <br>
+    {% for row in excel_data %}
+        {% for cell in row %}
+            {{ cell }}
+        {% endfor %}
+        <br>
+    {% endfor %}
+
+</body>

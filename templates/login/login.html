@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <style type="text/css">
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1> ERP System </h1>
+            <p> Honeycomb </p>
+            <div class="well">
+            <form method="POST" action="{%url 'login'%}" autocomplete="off">
+                {% csrf_token %}
+                아이디:
+                <br>
+                <input name="username" type="text">
+                <br>
+                비밀번호:
+                <br>
+                <input name="password" type="password">
+                    {% if error_message %}
+                        <p> <strong> {{ error_message }} </strong> </p>
+                    {% endif %}
+                <br>
+                <br>
+                <input type="submit" value="로그인">
+                <button type="button" onclick="location.href='{%url 'signup'%}'">회원가입</button>
+            </form>
+            <br>
+        </div>
+</div>
+    </body>
+</html>
+

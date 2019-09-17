@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+        body{padding-top:40px;}
+
+        #wrapper {
+            padding-left: 0;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
+
+        #sidebar-wrapper {
+            z-index: 1000;
+            position: fixed;
+            left: 250px;
+            width: 0;
+            height: 100%;
+            margin-left: -250px;
+            overflow-y: auto;
+            background: #222;
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
+
+
+        .sidebar-nav {
+            position: absolute;
+            top: 0;
+            width: 250px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            text-indent: 20px;
+            line-height: 40px;
+        }
+
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+
+        }
+
+        .sidebar-nav li a:hover {
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar-nav li a:active,
+
+        .sidebar-nav li a:focus {
+            text-decoration: none;
+        }
+
+        .sidebar-nav ul {
+            color:#999;
+            display:none;
+        }
+
+        .sidebar-nav li:hover ul{
+            display:block;
+            }
+
+
+        .sidebar-nav > .sidebar-brand {
+            height: 50px;
+            font-size: 20px;
+            line-height: 50px;
+            background: #fff;
+        }
+
+        .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+            background: #000
+        }
+
+        .sidebar-nav > .sidebar-brand a:hover {
+            color: #fff;
+            background: none;
+        }
+
+        @media(min-width:768px) {
+            #wrapper {
+                padding-left: 200px;
+            }
+
+            #sidebar-wrapper {
+                width: 200px;
+            }
+
+            #page-content-wrapper {
+                padding: 20px;
+                position: relative;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                {% block title %}
+                <a class="navbar-brand">ERP System</a>
+                {% endblock %}
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li><a>{{user.username}} 님 환영합니다.</a></li>
+                <li><a href="{%url 'logout'%}">로그아웃</a></li>
+                {% else %}
+                <li><a href="{%url 'login'%}">로그인</a></li>
+                <li><a href="{%url 'signup'%}">회원가입</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+
+                <li class="sidebar-brand">
+                    <a href="#">Menu</a>
+                </li>
+
+                <li>
+                    <a href="{%url 'main'%}">전체화면</a>
+                </li>
+
+                <li>
+                    <a href="#">상품관리</a>
+                    <ul>
+                        <li><a href="{%url 'receipts_page'%}">상품 조회/등록</a></li>
+                    </ul>
+                </li>
+
+                <li>
+
+                    <a href="#">판매관리</a>
+                    <ul>
+                        <li><a href="{%url 'issue_page'%}">판매 상품 등록</a></li>
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#">재고관리</a>
+                    <ul>
+                        <li><a href="{%url 'stock_page'%}">재고 상품 조회</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+        <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+    {% block content %}
+
+    {% endblock %}
+
+                   </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>

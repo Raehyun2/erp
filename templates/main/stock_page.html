@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+
+<a class="navbar-brand">ERP System (재고관리)</a>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="POST" action="{%url 'stock_page'%}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="view">재고상품 보기</button>
+        <br>
+    </form>
+
+    <br>
+
+    {% if stock %}
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>입고일</th>
+                <th>상품명</th>
+                <th>상품번호</th>
+                <th>입고처</th>
+                <th>잔고수량</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for i in stock %}
+            <tr>
+                <td>"{{i.user}}"</td>
+                <td>"{{i.date}}"</td>
+                <td>"{{i.product_name}}"</td>
+                <td>"{{i.product_number}}"</td>
+                <td>"{{i.product_place}}"</td>
+                <td>"{{i.remain_product}}"</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+{% endblock %}
