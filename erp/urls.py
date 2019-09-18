@@ -21,7 +21,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('login.urls')),
-    path('main/',include('main.urls'))
+    path('main/',include('main.urls')),
+    path('openmarket/',include('openmarket.urls'))
 ]
 
 if settings.DEBUG:

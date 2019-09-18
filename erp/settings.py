@@ -25,7 +25,7 @@ SECRET_KEY = 'ro%90gp5oenm3py=e89ru^_9*r=1zy0n+ii-h=3m_tltw09s$!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login.apps.LoginConfig',
     'main.apps.MainConfig',
+    'openmarket.apps.OpenmarketConfig',
 ]
 
 MIDDLEWARE = [

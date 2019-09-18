@@ -1,0 +1,82 @@
+<% Option Explicit %>
+<!--#include file="VBBase64.asp"-->
+<%
+'-----------------------------------------------------------------------------------------
+' AuctionLogin
+' 옥션에서 제공하는 로그인 페이지로 이동해서 인증 티켓을 받아온다.
+'-----------------------------------------------------------------------------------------
+	Dim ticket			' 옥션 로그인 페이지를 통해 받을 인증 티켓
+	Dim loginPageUrl	' 옥션 로그인 페이지 URL
+	Dim returnUrl
+	Dim devID
+	Dim appID
+	Dim appPWD
+
+	devID = "개발자프로그램 회원ID를 입력하세요"	' 개발자 ID
+	appID = "API프로그램 ID를 입력하세요"			' 프로그램 ID
+	appPWD = "API프로그램 비밀번호를 입력하세요"	' 프로그램 비밀번호
+
+	ticket = request ("ticket")	' 인증티켓
+
+	'loginPageUrl = "https://memberssl.auction.co.kr/API/Login/WebServiceLogin2.aspx"	' 운영 서버 (인증티켓을 받아올 URL)
+	loginPageUrl = "https://apitest.auction.co.kr/APIv1/WebServiceLogin2.aspx"	' Sandbox 서버 (인증티켓을 받아올 URL)
+	returnUrl = "http://" & Request.Servervariables("SERVER_NAME") & Request.Servervariables("URL")
+%>
+
+
+<html>
+	<head>
+		<title>인증티켓받기</title>
+		<link rel="Stylesheet" href="http://script.auction.co.kr/API/community/intranet.css" type="text/css">
+		<script language="javascript">
+		<!--
+			function AddItem() {
+				document.form1.action = "additem.asp";
+				document.form1.submit();
+			}
+		//-->
+		</script>
+	</head>
+	<body>
+
+		<form method="post" name="form1" action="<%= loginPageUrl %>">
+
+			<table width="700" border=1 ID="Table1">
+			<tr>
+				<td>DevID</td>
+				<td><input type="text" value="<%= devID %>" name="DevID"></td>
+			</tr>
+			<tr>
+				<td>AppID</td>
+				<td><input type="text" value="<%= appID %>" name="AppID"></td>
+			</tr>
+			<tr>
+				<td>AppPW</td>
+				<td><input type="text" value="<%= appPWD %>" name="APPPASSWORD"></td>
+			</tr>
+			<tr>
+				<td>ReturnUrl</td>
+				<td><input type=text value="<%= returnUrl %>" name=ReturnUrl style="WIDTH: 600px;"></td>
+			</tr>
+			<tr>
+				<td>EncryptedTicket</td>
+				<td><input type=text name="ticket" value="<%= ticket %>" style="WIDTH: 600px;" size=108></td>
+			</tr>
+			<tr>
+				<td colspan=2 align="right"><input type="submit" value="Ticket 가져오기" ID="Submit1" NAME="Submit1"></td>
+			</tr>
+			</table>
+
+			<p>API 함수 호출하기</p>
+			<table width="700" border=1>
+			<tr height=30>
+				<td colspan=2>함수명</td>
+			</tr>
+			<tr height=30>
+				<td><h4>[물품 등록하기] AddItem, ReviseItemStock, ReviseItemSelling</h4></td>
+				<td width="70" align="center"><a href="javascript:AddItem();">실행</a></td>
+			</tr>
+			</table>
+		</form>
+	</body>
+</html>
